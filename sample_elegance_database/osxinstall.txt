@@ -1,0 +1,77 @@
+Elegance Install Instructions for OS X
+
+For steps on setting up a MySQL server please consult the ubuntuinstall instructions.
+
+
+Perform any necessary updates to your computer
+
+	Click on Apple Icon → software update
+
+Update to the latest JAVA JDK
+
+	Note:  You must sign up for a free Apple Developer account if 		you have not already  
+	Go to the following website and download the most recent JDK for 		your specific version of OS X
+
+	http://developer.apple.com/java/download/
+
+	After downloading, go to your download directory and run the 		installer for your recently downloaded JDK
+
+Disable Previous Versions of JAVA
+
+	Go to Applications → Utilities → Java Preferences
+
+	Make sure that only the most recent version of Java is enabled.  	To double check this you can type “java -version” into a 		terminal .
+
+Install Elegance
+
+	Move the Folder named “Elegance” to your Desktop.  Create a 		shortcut on your desktop for easy opening of the elegance 		program.  You can do this by creating a launcher pointing to the 	“start” file within the Elegance 
+	directory.
+
+	The start file will reads as: 
+ 	
+	#!/bin/bash
+	java -classpath  -Xms1000M -Xmx14000M -cp lib/Elegance.jar/:lib/mysql-connector-java-5.1.18-bin.jar:lib/jai_codec.jar
+	:lib/jai_core.jar:lib/vecmath.jar:lib/j3dcore.jar:lib/j3dutils.jar:lib/j3dcore-ogl.so Elegance
+
+	Edit The 2nd line of the start file to reflect the directory containing the Elegance folder.  Adjust -Xmx to reflect your computer 	 	capabilities.
+
+
+The configuration.txt file is displayed below.  Make the necessary edits to match your MySQL server setup.
+
+	# Elegance User
+	***ENTER YOUR ELEGANCE USERNAMES HERE***
+	#
+	# Database Name
+	***ENTER MYSQL DATABASE NAMES HERE****
+	#
+	# Database Server
+	***ENTER SERVER ADDRESS HERE***
+	#
+	# Database Username
+	***ENTER MYSQL USERNAME HERE***
+	#
+	# Database Password
+	***ENTER MYSQL PASSWORD HERE***
+	#
+	#  
+Create an Image Directory
+
+	We suggest creating a directory separate from the Elegance 		folder to contain your image files.  We create a Z drive for 		this purpose.  
+
+	Open a terminal and type in the following commands:
+
+	sudo mkdir /Z
+	sudo chmod -R 777 /Z
+
+Upload the PLOSJSE database
+
+	Open phpmyadmin (localhost/phpmyadmin)
+	
+	Create new database named "PLOSJSE"
+
+	Navigate to PLOSJSE
+
+	Import -> PLOSJSE.SQL
+
+	Update configuration.txt to open PLOSJSE.sql in Elegance.
+

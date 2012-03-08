@@ -1,0 +1,61 @@
+import java.io.File;
+import java.io.IOException;
+
+//import com.imagero.reader.ReaderFactory;
+//import com.imagero.reader.tiff.TiffReader;
+import java.sql.*;
+
+
+public class AlignImage {
+	
+	
+	public static void main(String[] args)
+	throws SQLException,
+    ClassNotFoundException, java.lang.InstantiationException, java.lang.IllegalAccessException 
+	{
+	
+	Connection con = null;
+	PreparedStatement pst = null, pst1 = null;
+	ResultSet rs = null;
+	int	width = 0;
+	int height = 0;
+	
+	try
+    {
+  	Class.forName("com.mysql.jdbc.Driver").newInstance();
+	con = DriverManager.getConnection ( DatabaseProperties.CONNECTION_STRING,  DatabaseProperties.USERNAME,  DatabaseProperties.PASSWORD );
+	pst = con.prepareStatement("select IMG_Number,IMG_Directory,IMG_File from image where IMG_Series='PAG' or IMG_Series='PAGHP' order by IMG_Number");
+	
+    rs = pst.executeQuery();
+    while (rs.next()){
+    	String imgN = rs.getString(1);
+    	File file = new File( rs.getString(2)+"\\"+rs.getString(3) );
+    	System.out.println(rs.getString(2)+"\\"+rs.getString(3));
+    	//TiffReader reader =  (TiffReader) ReaderFactory.createReader(file);
+    
+    	//width = reader.getWidth(0);
+    	//height = reader.getHeight(0);
+    	
+    	pst1 = con.prepareStatement("insert into imageSize (IMG_Number,width,height) values (?,?,?)");
+    	pst1.setString(1, imgN);
+    	pst1.setInt(2, width);
+    	pst1.setInt(3, height);
+    	pst1.executeUpdate();
+    	pst1.close();
+    	
+    	
+    	//System.out.println(imgN+"    "+width+"   "+height);
+    }
+	
+	
+	
+	
+	  
+
+    } catch(Exception e){e.printStackTrace();}
+	
+	}
+	
+
+
+}

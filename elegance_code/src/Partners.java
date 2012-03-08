@@ -1,0 +1,363 @@
+import java.sql.*;
+import java.util.*;
+
+class PartnerPair
+{
+public PartnerPair(String pre, String post, String type, int sections) {
+		super();
+		this.pre = pre;
+		this.post = post;
+		this.type = type;
+		this.sections = sections;
+		shift();
+	}
+
+
+public String getPre() {
+	return pre;
+}
+public void setPre(String pre) {
+	this.pre = pre;
+}
+public String getPost() {
+	return post;
+}
+public void setPost(String post) {
+	this.post = post;
+}
+public String getType() {
+	return type;
+}
+public void setType(String type) {
+	this.type = type;
+}
+public int getSections() {
+	return sections;
+}
+public void setSections(int sections) {
+	this.sections = sections;
+}
+
+public void shift()
+{
+	if (type.equals("electrical")) 
+	{
+		if (pre.compareTo(post)<0) 
+		{
+			
+			String s = pre;
+			pre = post;
+			post = s;
+			
+		}
+	}
+}
+
+
+String pre;
+String post;
+String type;
+int sections;
+
+}
+
+class Partners
+{
+	
+	LinkedHashMap<String,PartnerPair> partners;
+	LinkedHashMap<String,String> contins,objs;
+	Connection con= null;
+	
+	
+	public void loadContinTable() throws SQLException,
+	ClassNotFoundException, java.lang.InstantiationException,
+	java.lang.IllegalAccessException 
+	{
+		contins = new LinkedHashMap<String,String>(20000);
+	    
+        Connection con = EDatabase.borrowConnection(
+		
+		);
+        String jsql;
+        PreparedStatement pstmt;
+        ResultSet rs;
+
+        jsql = "select CON_Number,CON_AlternateName from contin order by CON_Number";
+        pstmt = con.prepareStatement(jsql);
+        rs = pstmt.executeQuery();
+        while (rs.next()) 
+        {
+	     String conNum = rs.getString(1);
+	     String conName = rs.getString(2);
+	     contins.put(conNum, conName);
+	    
+        }
+       
+    rs.close();
+    pstmt.close();
+    }
+	
+
+	
+	
+	public void loadObjectTable() throws SQLException, ClassNotFoundException,
+	java.lang.InstantiationException, java.lang.IllegalAccessException
+
+    {
+     // load object table
+     
+     Connection con = EDatabase.borrowConnection(
+		                         
+		                         );
+     String jsql;
+     PreparedStatement pstmt;
+     ResultSet rs;
+     objs= new LinkedHashMap<String,String>(500000);
+     jsql = "select OBJ_Name,CON_Number from object where type like 'cel%'";
+     pstmt = con.prepareStatement(jsql);
+     rs = pstmt.executeQuery();
+     while (rs.next()) 
+       {
+
+	     String name = rs.getString(1);
+	
+	     String conN = rs.getString(2);
+
+	     objs.put(name, conN);
+
+       }
+        rs.close();
+        pstmt.close();
+
+    }
+	
+	public void loadSyns()throws SQLException, ClassNotFoundException,
+	java.lang.InstantiationException, java.lang.IllegalAccessException
+	{
+		partners= new LinkedHashMap<String,PartnerPair>(100000);
+		
+		
+		
+		Connection con = EDatabase.borrowConnection(
+				
+				);
+		String jsql;
+		PreparedStatement pstmt;
+		ResultSet rs;
+
+		jsql = "select fromObj,toObj,type from object where ( type='chemical' or type='electrical' ) ";
+		pstmt = con.prepareStatement(jsql);
+		rs = pstmt.executeQuery();
+		while (rs.next()) {
+			
+			String pre = rs.getString(1);
+			
+			String post = rs.getString(2);
+			
+			String type = rs.getString(3);
+			
+			if(post!=null && pre!=null)
+			{
+			PartnerPair p = new PartnerPair(getPreContinName(pre), getPostContinName(post), type,1);
+			String pship = p.pre +"->"+ p.post+"-"+p.type;
+		       if(partners.containsKey(pship))
+		       {
+		    	   PartnerPair pp = partners.get(pship);
+		    	   partners.put(pship,new PartnerPair(pp.getPre(),pp.getPost(),pp.getType(),pp.getSections()+1));
+		    	   
+		       }
+		       else
+		       {
+		    	   partners.put(pship,p);
+		       }
+		
+			}
+		}
+		rs.close();
+		pstmt.close();
+		//Util.info("syns size: "+syns.size());
+	}
+	
+	public String getPreContinName(String pre)
+	{
+		String precontin="";
+		if (objs.containsKey(pre))
+		{
+           precontin = (String)objs.get(pre);
+           
+        
+           if (contins.containsKey(precontin))
+             {
+                    return(contins.get(precontin));
+                    
+             }else{
+                    return("contin"+precontin);
+             }
+		}else{
+			return("obj" + pre);
+		}
+	
+	}
+	
+	public String getPostContinName(String post)
+	{
+		String postname="";
+		
+        String[] posts = (post).split(",");
+        
+   
+        for(int i=0;i<posts.length;i++)
+        {
+        	String postcontinname="";
+        	//Util.info("postobj:"+posts[i]);
+        	if (objs.containsKey(posts[i]))
+    		{
+               String postcontin = (String)objs.get(posts[i]);
+              // System.out.print("postcontin: "+postcontin+"      ");
+            
+               if (contins.containsKey(postcontin))
+                 {
+                       postcontinname = (String)(contins.get(postcontin));
+                       if (postcontinname==null) postcontinname="null";
+                    
+                 }
+                 else
+                 {
+                       postcontinname = "contin"+postcontin;
+                       
+                 }
+    		}
+        	else
+        	{
+    			postcontinname = "obj" + post;
+    			
+    		}
+        	
+        	//System.out.print("postcontinname: "+postcontinname+"      ");
+        	if(i==0){postname=postcontinname;}
+        	else
+        	{
+        		//Util.info("syn:"+syn.synID+"  "+postname+"  "+postcontinname);
+        		if (postname.compareTo(postcontinname)>0) 
+        		{
+        			postname=postname+","+postcontinname;
+        		}
+        		else
+        		{
+        			postname=postcontinname+","+postname;
+        		}
+            }// else i==0
+        }//for
+        return postname;
+		
+	}
+	
+	
+	
+	
+	public Partners()
+	{
+		
+		try {
+			
+			con = EDatabase.borrowConnection(
+					
+					);
+			ELog.info("begain to loading");
+			deletePreviousData();
+			loadObjectTable();
+			loadContinTable();
+			loadSyns();
+			
+			ELog.info("begain to saving");
+			save();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+	}
+	
+	 private void deletePreviousData()
+	   {
+		   //delete the previous synapse data
+		    
+		    PreparedStatement pst = null;
+			try{    
+				    
+					
+				
+				    
+					pst = con.prepareStatement("delete from partnership" );
+					pst.executeUpdate();
+					pst.close();
+					
+					pst = con.prepareStatement("alter table partnership auto_increment=0 " );
+					pst.executeUpdate();
+					pst.close();
+					
+					
+					
+					
+			    }catch (Exception e) 
+		            {
+	                e.printStackTrace (  );
+	                } 
+		      
+		
+	   }
+	 
+  
+	 
+
+
+
+   private void save()throws SQLException,
+	    ClassNotFoundException, java.lang.InstantiationException, java.lang.IllegalAccessException 
+   {
+	 
+	   try
+		{
+		   PreparedStatement pst = null;
+		   pst = con.prepareStatement("insert into partnership (pre,post,type,sections) values (?,?,?,?)");
+	       Set key = partners.entrySet(); 
+	       Iterator iter = key.iterator();
+	       while(iter.hasNext())
+	         {
+		       Map.Entry entry = (Map.Entry) iter.next();
+		       PartnerPair p = (PartnerPair) entry.getValue();
+		     
+				     String[] post = (p.getPost()).split(",");
+				    
+				     
+				     for( int i=0;i<post.length;i++)
+				        {
+										
+										pst.setString(1, p.pre);
+										pst.setString(2, post[i]);
+										pst.setString(3, p.type);
+										pst.setInt(4, p.sections);
+										pst.addBatch();
+									
+				        }
+			
+	         }//end of iterator
+	   	pst.executeBatch();
+		pst.close();
+	       
+		 }catch (Exception e) 
+         {
+             e.printStackTrace (  );
+         } 
+	         
+   }
+   
+   
+   
+   
+
+   
+}
+
+   
+  

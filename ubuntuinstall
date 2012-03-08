@@ -6,77 +6,80 @@ Install LAMP
 
 We employ a LAMP(Linux, Apache HTTP Server, MySQL, PHP) system to host our MySQL server containing databases created by Elegance.  Although these instructions were written for Ubuntu 11.04 they are applicable to 11.10 as well.  Please follow the guide written by Falko Timme (ft@falkotimme.com) to complete this step.
 
-http://www.howtoforge.com/installing-apache2-with-php5-and-mysql-support-on-ubuntu-11.04-lamp
+http://www.howtoforge.com/installing-apache2-with-php5-and-mysql-support-on-ubuntu-11.10-lamp
+
+After installation of your LAMP system, be sure to upload the structure.sql database.  You may then change the name of this dataset to reflect your specific project.
 
 
 Install Java 7 JDK (Oracle)
 
-Oneiric Ocelot will automatically install Open JDK 6 for you.  However, we strongly suggest using the Java 7 JDK.
+	Oneiric Ocelot will automatically install Open JDK 6 for you.  However, we strongly suggest using the Java 7 JDK.
 	
-	Download the file jdk-7-linux-x64.tar.gz from Orace (http://www.oracle.com/technetwork/java/javase/downloads/java-se-jdk-7-download-432154.html)
+	Download the file jdk-7-linux-x64.tar.gz from Orace 
+	(http://www.oracle.com/technetwork/java/javase/downloads/java-se-jdk-7-download-432154.html)
 
-	Extract the contents of the downloaded file to your home folder  I renamed the folder java-7-oracle.  Next  	move the extracted folder to /usr/lib/jvm/
+	Extract the contents of the downloaded file to your home folder  I renamed the folder java-7-oracle.  Next  	move the extracted folder 		to /usr/lib/jvm/
 
-	  cd
+	cd
 	sudo mkdir -p /usr/lib/jvm/ #just in case
 	sudo mv java-7-oracle/ /usr/lib/jvm/
 
 
 	Next, install the update java package by Bruce Ingalls
 
-	  sudo add-apt-repository ppa:nilarimogard/webupd8
+	sudo add-apt-repository ppa:nilarimogard/webupd8
 	sudo apt-get update
 	sudo apt-get install update-java
 
 	
 	Select the new version of Java you moved to your /usr/lib/jvm/ folder (/usr/lib/jvm/java-7-oracle)
 
-	 sudo update-java
+	sudo update-java
 
 	
 	Check that you are now running Java 7 
 
 	java -version
-       javac -version
+        javac -version
 
 
 Install Elegance
 
-	Move the Folder named “Elegance” to your Desktop.  This folder will contain all of the files necessary to 	run Elegance not including a MySQL server and Image Files.
+	Move the Folder named “Elegance” to your Desktop.  This folder will contain all of the files necessary to run Elegance not including 		a MySQL server and Image Files.
 
 	The start file will reads as: 
  	
 	#!/bin/bash
-	cd /home/mxu/Elegance
-	java -classpath mysql-connector-java-5.1.18-bin.jar:Elegance.jar -Xmx7000m -Xss16m Elegance
+	java -classpath  -Xms1000M -Xmx14000M -cp lib/Elegance.jar/:lib/mysql-connector-java-5.1.18-bin.jar:lib/jai_codec.jar:
+	lib/jai_core.jar:lib/vecmath.jar:lib/j3dcore.jar:lib/j3dutils.jar:lib/j3dcore-ogl.so Elegance
 
-	Edit The 2nd line of the start file to reflect the directory containing the Elegance folder.  Adjust -Xmx to 	reflect your computer capabilities.
+	Edit The 2nd line of the start file to reflect the directory containing the Elegance folder.  Adjust -Xmx to reflect
+	your computer's capabilities.
 
-	The configuration.tx file reads as:
+The configuration.txt file is displayed below.  Make the necessary edits to match your MySQL server setup.
 
-	# Elegance User 
-
-	***usernames
-	# 
-	# Database Name 
-	***mysql database names
-	# 
-	# Database Server 
-	***database server IP address
-	# 
-	# Database Username 
-	***username
-	# 
-	# Database Password 
-	***password
-	# 
+	# Elegance User
+	***ENTER YOUR ELEGANCE USERNAMES HERE***
+	#
+	# Database Name
+	***ENTER MYSQL DATABASE NAMES HERE****
+	#
+	# Database Server
+	***ENTER SERVER ADDRESS HERE***
+	#
+	# Database Username
+	***ENTER MYSQL USERNAME HERE***
+	#
+	# Database Password
+	***ENTER MYSQL PASSWORD HERE***
+	#
 	#  
 
 
 
 Create an Image Directory
 
-	We suggest creating a directory separate from the Elegance folder to contain your image files.  We 	create a z drive for this purpose.  
+	We suggest creating a directory separate from the Elegance 		folder to contain your image files.  We create a z drive for 		this purpose.  
 
 	Open a terminal and type in the following commands:
 

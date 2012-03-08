@@ -1,0 +1,407 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/2/trunk/src/Admin
+END
+ClearContin.java
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/src/Admin/ClearContin.java
+END
+TwoDImage2.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/src/Admin/TwoDImage2.java
+END
+Run.java
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/2/trunk/src/Admin/Run.java
+END
+CorrectRel.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/src/Admin/CorrectRel.java
+END
+ConnectSyns.java
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/src/Admin/ConnectSyns.java
+END
+Smooth.java
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2/trunk/src/Admin/Smooth.java
+END
+RunYiImage.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/src/Admin/RunYiImage.java
+END
+SynapsesClear.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2/trunk/src/Admin/SynapsesClear.java
+END
+DatabaseProperties.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2/trunk/src/Admin/DatabaseProperties.java
+END
+Records2.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/src/Admin/Records2.java
+END
+Ca.java
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/2/trunk/src/Admin/Ca.java
+END
+ClearRecord.java
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/src/Admin/ClearRecord.java
+END
+Contin.java
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2/trunk/src/Admin/Contin.java
+END
+NameContin.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/src/Admin/NameContin.java
+END
+Display3D.java
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/src/Admin/Display3D.java
+END
+AddContinSyn.java
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2/trunk/src/Admin/AddContinSyn.java
+END
+blink.java
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/2/trunk/src/Admin/blink.java
+END
+CaSyn2.java
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2/trunk/src/Admin/CaSyn2.java
+END
+delObjRelByImage.java
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/2/trunk/src/Admin/delObjRelByImage.java
+END
+UserTran.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/src/Admin/UserTran.java
+END
+TwoDPAG.java
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/src/Admin/TwoDPAG.java
+END
+Synapses.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/src/Admin/Synapses.java
+END
+CompareUsers.java
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2/trunk/src/Admin/CompareUsers.java
+END
+ConSyn.java
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2/trunk/src/Admin/ConSyn.java
+END
+GlobalStrings.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2/trunk/src/Admin/GlobalStrings.java
+END
+recoverPost.java
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/src/Admin/recoverPost.java
+END
+testArray.java
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/src/Admin/testArray.java
+END
+NewSynapses.java
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/src/Admin/NewSynapses.java
+END
+ShiftRel.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/src/Admin/ShiftRel.java
+END
+ClearSyn.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/src/Admin/ClearSyn.java
+END
+CsvMatrix.java
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/src/Admin/CsvMatrix.java
+END
+addSize.java
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/src/Admin/addSize.java
+END
+TwoDCurveName.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2/trunk/src/Admin/TwoDCurveName.java
+END
+ObjRelClear.java
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/src/Admin/ObjRelClear.java
+END
+toMu.java
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/2/trunk/src/Admin/toMu.java
+END
+RecordClear.java
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/src/Admin/RecordClear.java
+END
+line.java
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/2/trunk/src/Admin/line.java
+END
+ReportItem.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/src/Admin/ReportItem.java
+END
+UserTranTravis.java
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/2/trunk/src/Admin/UserTranTravis.java
+END
+TwoDCurveContin.java
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/2/trunk/src/Admin/TwoDCurveContin.java
+END
+AddContin.java
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/src/Admin/AddContin.java
+END
+TwoDCurve2.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/src/Admin/TwoDCurve2.java
+END
+Synapse2.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/src/Admin/Synapse2.java
+END
+ImageViewer.java
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/src/Admin/ImageViewer.java
+END
+Ca3D.java
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/2/trunk/src/Admin/Ca3D.java
+END
+PAGImage.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/src/Admin/PAGImage.java
+END
+syntype.java
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/src/Admin/syntype.java
+END
+CaOldSyn.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/src/Admin/CaOldSyn.java
+END
+Test.java
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/2/trunk/src/Admin/Test.java
+END
+UpdateN2YTable.java
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/2/trunk/src/Admin/UpdateN2YTable.java
+END
+Run0.java
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/2/trunk/src/Admin/Run0.java
+END
+Synapses2.java
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/src/Admin/Synapses2.java
+END
+Calculate.java
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/src/Admin/Calculate.java
+END
+Records.java
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/src/Admin/Records.java
+END
+ColorDisplay.java
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2/trunk/src/Admin/ColorDisplay.java
+END
+UserTranyi.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/src/Admin/UserTranyi.java
+END
+CellObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/src/Admin/CellObject.java
+END
+delImage.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/src/Admin/delImage.java
+END
+RunImage.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/src/Admin/RunImage.java
+END
+Syn.java
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/2/trunk/src/Admin/Syn.java
+END
+CaSyn.java
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/2/trunk/src/Admin/CaSyn.java
+END
+LoadImageList.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2/trunk/src/Admin/LoadImageList.java
+END
+ContinTran.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/src/Admin/ContinTran.java
+END
+RunSyns.java
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/src/Admin/RunSyns.java
+END
+TwoDCurve.java
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/src/Admin/TwoDCurve.java
+END
+Synapse.java
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/src/Admin/Synapse.java
+END
+Rotator.java
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/src/Admin/Rotator.java
+END

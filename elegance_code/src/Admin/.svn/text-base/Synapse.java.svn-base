@@ -1,0 +1,513 @@
+package Admin;
+ import java.awt.Point;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.swing.JOptionPane;
+
+
+
+public class Synapse
+{
+	
+	
+	
+	
+	String imageNumber;
+	Point  p;
+	String synName;
+	String fromObj;
+	String toObj;
+    String type; 
+	String remark;
+	String synID;
+
+	/**
+	 * Creates a new Synapse object using the provided information.
+	 *
+	 * @param newImageNo a string identifying the image number of the image of which this
+	 *        object is a part of
+	 * @param newP the point on the unrotated image to which this object corresponds.
+	 */
+	public Synapse ( 
+	    String newImageNo,
+	    Point  newP
+	 )
+	{
+		imageNumber     = newImageNo;
+		p               = newP;
+		setSynapse (  );
+	}
+
+	/**
+	 * Creates a new Synapse object using the provided information.
+	 *
+	 * @param newImageNo a string identifying the image number of the image of which this
+	 *        object is a part of
+	 * @param newObjectName the object name of the particular object.
+	 */
+	public Synapse (
+	    String newSynName
+	 )
+	{
+		synName      = newSynName;
+		setPoint (  );
+	}
+
+	/**
+	 * connects to the database and fetches the contin number of this particular object.
+	 * Connecting to the database is imperative because the contin number of an object
+	 * need not be constant and might keep changing as contins are created or deleted.
+	 *
+	 * @return returns the contin number (a number >=0) if an object exists in the
+	 *         database. returns -1 otherwise.
+	 */
+	public String getType(  )
+	{
+		return type;
+	}
+
+	public String getSynID()
+	{
+		return synID;
+	}
+
+
+
+	public int getSectionNum (  )
+	{
+		//if(continNumber != -1 ) return continNumber;
+		Connection con = null;
+
+		try
+		{
+			con = DriverManager.getConnection ( 
+				    DatabaseProperties.CONNECTION_STRING,
+				    DatabaseProperties.USERNAME,
+				    DatabaseProperties.PASSWORD
+				 );
+
+			PreparedStatement pst =
+				con.prepareStatement ( 
+				    "select IMG_SectionNumber from image where IMG_Number = ?"
+				 );
+			pst.setString ( 1, imageNumber );
+			
+
+			ResultSet rs = pst.executeQuery (  );
+
+			if ( rs.next (  ) )
+			{
+				if ( con.isClosed (  ) == false )
+				{
+					con.close (  );
+				}
+
+				return rs.getInt ( "IMG_SectionNumber" );
+			}
+			else
+			{
+				if ( con.isClosed (  ) == false )
+				{
+					con.close (  );
+				}
+
+				return -1;
+			}
+		}
+		catch ( Exception ex )
+		{
+			ex.printStackTrace (  );
+			JOptionPane.showMessageDialog ( 
+			    null,
+			    ex.getMessage (  ),
+			    "Error",
+			    JOptionPane.ERROR_MESSAGE
+			 );
+
+			if ( con != null )
+			{
+				con = null;
+			}
+
+			return -1;
+		}
+	}
+
+
+	
+
+	private void setSynapse (  )
+	{
+		Connection con = null;
+
+		try
+		{
+			con = DriverManager.getConnection ( 
+				    DatabaseProperties.CONNECTION_STRING,
+				    DatabaseProperties.USERNAME,
+				    DatabaseProperties.PASSWORD
+				 );
+
+			PreparedStatement pst =
+				con.prepareStatement ( 
+				    "select * from synapse where IMG_Number = ? and OBJ_X = ? and OBJ_Y = ?"
+				 );
+			pst.setString ( 1, imageNumber );
+			pst.setInt ( 2, p.x );
+			pst.setInt ( 3, p.y );
+
+			ResultSet rs = pst.executeQuery (  );
+
+			if ( rs.next (  ) )
+			{
+				synName      = rs.getString ( "synName" );
+				type       = rs.getString ( "type" );
+				fromObj    = rs.getString ("fromObj");
+				toObj      = rs.getString("toObj");
+				remark     = rs.getString("remark");
+				synID      = rs.getString("synID");
+
+
+				if ( con.isClosed (  ) == false )
+				{
+					con.close (  );
+				}
+			}
+			else
+			{
+				if ( con.isClosed (  ) == false )
+				{
+					con.close (  );
+				}
+
+				return;
+			}
+		}
+		catch ( Exception ex )
+		{
+			ex.printStackTrace (  );
+			JOptionPane.showMessageDialog ( 
+			    null,
+			    ex.getMessage (  ),
+			    "Error",
+			    JOptionPane.ERROR_MESSAGE
+			 );
+
+			if ( con != null )
+			{
+				con = null;
+			}
+
+			return;
+		}
+	}
+
+	/**
+	 * creates a Synapse using the information provided if an object with the given
+	 * information exists in the database.
+	 *
+	 * @param objName The name of the object
+	 * @param imgNumber the image number of the image in which this particular object is
+	 *        found.
+	 * @param continNumber the contin number of the object
+	 *
+	 * @return the newly created Synapse if created of null otherwise.
+	 */
+	public static Synapse createSynapse ( 
+	    String objName
+	
+	 )
+	{    
+		 Connection con = null;
+
+		try
+		{
+			con = DriverManager.getConnection ( 
+				    DatabaseProperties.CONNECTION_STRING,
+				    DatabaseProperties.USERNAME,
+				    DatabaseProperties.PASSWORD
+				 );
+
+			PreparedStatement pst =
+				con.prepareStatement ( 
+				    "select * from synapse where synName = ? "
+				 );
+			pst.setString ( 1, objName );
+			
+
+			ResultSet rs = pst.executeQuery (  );
+
+			if ( rs.next (  ) )
+			{
+				Point pt = new Point(  );
+				pt.x     = rs.getInt ( "OBJ_X" );
+				pt.y     = rs.getInt ( "OBJ_Y" );
+
+				String str = rs.getString ( "IMG_Number" );
+
+				if ( con.isClosed (  ) == false )
+				{
+					con.close (  );
+				}
+
+				return new Synapse( str, pt );
+			}
+			else
+			{
+				if ( con.isClosed (  ) == false )
+				{
+					con.close (  );
+				}
+
+				return null;
+			}
+		}
+		catch ( Exception ex )
+		{
+			ex.printStackTrace (  );
+			JOptionPane.showMessageDialog ( 
+			    null,
+			    ex.getMessage (  ),
+			    "Error",
+			    JOptionPane.ERROR_MESSAGE
+			 );
+
+			if ( con != null )
+			{
+				con = null;
+			}
+
+			return null;
+		}
+	}
+
+	/**
+	 * An override of the equals method of the Object class. returns true or false
+	 * depending on whether object is equal to this object or not.
+	 *
+	 * @param obj any Object
+	 *
+	 * @return Returns true of the object is of the type Synapse and the image numbers
+	 *         of both the objects are same and the points of both the objects are same.
+	 *         Returns false otherwise.
+	 */
+	public boolean equals ( Synapse obj )
+	{
+		try
+		{
+			Synapse obj1 = ( Synapse ) obj;
+
+			if ( 
+			    ( obj1.imageNumber.compareToIgnoreCase ( imageNumber ) == 0 )
+				    && ( p.x == obj1.p.x )
+				    && ( p.y == obj1.p.y )
+			 )
+			{
+				return true;
+			}
+
+			return false;
+		}
+		catch ( Exception ex )
+		{
+			return false;
+		}
+	}
+
+	private void setPoint (  )
+	{
+		Connection con = null;
+
+		try
+		{
+			con = DriverManager.getConnection ( 
+				    DatabaseProperties.CONNECTION_STRING,
+				    DatabaseProperties.USERNAME,
+				    DatabaseProperties.PASSWORD
+				 );
+
+			PreparedStatement pst =
+				con.prepareStatement ( 
+				    "select * from synapse where synName = ?"
+				 );
+
+			if (synName == null)
+			{
+				return;
+			}
+
+			pst.setString ( 1, synName );
+
+			ResultSet rs = pst.executeQuery (  );
+
+			if ( rs.next (  ) )
+			{
+				if ( con.isClosed (  ) == false )
+				{
+					con.close (  );
+				}
+
+				p     = new Point( rs.getInt ( "OBJ_X" ), rs.getInt ( "OBJ_Y" ) );
+				synName      = rs.getString ( "synName" );
+				type       = rs.getString ( "type" );
+				fromObj    = rs.getString ("fromObj");
+				toObj      = rs.getString("toObj");
+				remark     = rs.getString("remark");
+				imageNumber = rs.getString("IMG_Number");
+			}
+			else
+			{
+				if ( con.isClosed (  ) == false )
+				{
+					con.close (  );
+				}
+
+				return;
+			}
+		}
+		catch ( Exception ex )
+		{
+			ex.printStackTrace (  );
+			JOptionPane.showMessageDialog ( 
+			    null,
+			    ex.getMessage (  ),
+			    "Error",
+			    JOptionPane.ERROR_MESSAGE
+			 );
+
+			if ( con != null )
+			{
+				con = null;
+			}
+
+			return;
+		}
+	}
+
+	/**
+	 * returns the object name
+	 *
+	 * @return the object name
+	 */
+	public String getSynName (  )
+	{
+		if(synName == null || synName.compareTo("") == 0)
+        {
+            setSynapse();
+        }
+        return synName;
+	}
+
+	/**
+	 * returns a string representaions of this object. Overrides the toString method of
+	 * the Object class.
+	 *
+	 * @return a string representaions of this object
+	 */
+	public String toString (  )
+	{
+		return imageNumber + " " + p + " " + synName + "\n";
+	}
+    public int changeContinNumberInDatabase(int newNumber)
+    {
+        Connection con  = null;
+            try
+            {
+                    con =
+                    DriverManager.getConnection ( 
+                    DatabaseProperties.CONNECTION_STRING,
+                    DatabaseProperties.USERNAME,
+                    DatabaseProperties.PASSWORD
+                    );
+                PreparedStatement pst = con.prepareStatement("update object set CON_Number = ? WHERE IMG_Number = ? AND OBJ_Name = ?");
+                pst.setInt(1, newNumber);
+                pst.setString(2, this.imageNumber);
+                pst.setString(3, this.synName);
+                int returner = pst.executeUpdate();
+                if(con.isClosed() == false) con.close();
+                return returner;
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace (  );
+                JOptionPane.showMessageDialog ( 
+                    null,
+                    ex.getMessage (  ),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+                 );
+                  if(con != null) con= null;
+                  return -1;
+            }
+    }
+    public String getRemarks()
+    {
+        Connection con  = null;
+        String returner = "";
+        try
+        {
+            con =
+                DriverManager.getConnection ( 
+                DatabaseProperties.CONNECTION_STRING,
+                DatabaseProperties.USERNAME,
+                DatabaseProperties.PASSWORD
+                );
+            PreparedStatement pst = con.prepareStatement("Select OBJ_Remarks from synapse where synName = ? AND IMG_Number = ?");
+            pst.setString(1, this.synName);
+            pst.setString(2, this.imageNumber);
+            ResultSet rs = pst.executeQuery();
+            if(rs.next())
+            {
+                returner = rs.getString("SYN_Remarks");
+            }
+            if(con.isClosed() == false) con.close();
+        }
+        catch ( Exception ex )
+        {
+            ex.printStackTrace (  );
+            JOptionPane.showMessageDialog ( 
+                null,
+                ex.getMessage (  ),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+                );
+                if(con != null) con= null;
+        }
+        return returner;
+    }
+    public void saveRemarks(String remarks)
+    {
+        Connection con  = null;
+        String returner = "";
+        try
+        {
+            con =
+                DriverManager.getConnection ( 
+                DatabaseProperties.CONNECTION_STRING,
+                DatabaseProperties.USERNAME,
+                DatabaseProperties.PASSWORD
+                );
+            PreparedStatement pst = con.prepareStatement("Update Object set OBJ_Remarks = ? where OBJ_Name = ? AND IMG_Number = ?");
+            pst.setString(1, remarks);
+            pst.setString(2, this.synName);
+            pst.setString(3, this.imageNumber);
+            pst.executeUpdate();
+            if(con.isClosed() == false) con.close();
+        }
+        catch ( Exception ex )
+        {
+            ex.printStackTrace (  );
+            JOptionPane.showMessageDialog ( 
+                null,
+                ex.getMessage (  ),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+                );
+                if(con != null) con= null;
+        }
+    }
+}

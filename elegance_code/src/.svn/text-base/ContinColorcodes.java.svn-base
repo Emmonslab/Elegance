@@ -1,0 +1,48 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+public class ContinColorcodes {
+	
+	public static void main(String[] args) {
+		int continNum;
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			Connection con = DriverManager.getConnection(
+					DatabaseProperties.CONNECTION_STRING,
+					DatabaseProperties.USERNAME, DatabaseProperties.PASSWORD);
+			String jsql;
+			PreparedStatement pstmt;
+			ResultSet rs;
+		
+			  
+			jsql = "select CON_Number from contin where count > 1 and CON_Number>0";
+
+			pstmt = con.prepareStatement(jsql);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()){
+				continNum=rs.getInt(1);
+				System.out.println(continNum);
+				Contin c = new Contin(continNum);
+				c.generateColor();
+				System.out.println(c.colorcode);
+				c.save();
+			}
+				
+		
+			rs.close();
+			pstmt.close();
+			
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}  
+	}
+
+}

@@ -1,0 +1,16 @@
+# Elegance User
+***ENTER YOUR ELEGANCE USERNAMES HERE***
+#
+# Database Name
+***ENTER MYSQL DATABASE NAMES HERE****
+#
+# Database Server
+***ENTER SERVER ADDRESS HERE***
+#
+# Database Username
+***ENTER MYSQL USERNAME HERE***
+#
+# Database Password
+***ENTER MYSQL PASSWORD HERE***
+#
+#  

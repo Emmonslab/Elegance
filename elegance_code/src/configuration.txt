@@ -1,0 +1,16 @@
+# Elegance User
+scott,meng,travis,yi,adam
+#
+# Database Name
+elegance,jsi,n2z,jse,n930
+#
+# Database Server
+wormdesk1
+#
+# Database Username
+root
+#
+# Database Password
+worms
+#
+#  

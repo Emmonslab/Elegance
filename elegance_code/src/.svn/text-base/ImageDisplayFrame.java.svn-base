@@ -1,0 +1,291 @@
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import java.io.File;
+
+import javax.media.jai.JAI;
+import javax.media.jai.PlanarImage;
+import javax.swing.JFrame;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import java.io.*;
+import com.sun.media.jai.codec.*;
+import java.awt.image.*;
+
+
+/**
+ * This class is the extension of the JINternalFrame class that provides the
+ * functionality fot the display of the images. It implements the FocusListener and
+ * KeyListener interfaces to provide additional functionality.
+ *
+ * @author zndavid
+ * @version 1.0
+ */
+public class ImageDisplayFrame
+	extends JInternalFrame
+	implements KeyListener,
+		FocusListener
+{
+	private GridBagLayout     gridBagLayout1 = new GridBagLayout(  );
+	private ImageDisplayPanel panel       = null;
+	private JLabel            label       = null;
+	String                    imageNumber = "";
+    String  username = "";
+  
+
+	Dimension screenSize = Toolkit.getDefaultToolkit (  ).getScreenSize (  );
+    int fwidth =   (int) (screenSize.width/3.02);
+	int fheight =  (int)(screenSize.height*0.8);
+	
+	/**
+	 * Creates a new ImageDisplayFrame object.
+	 */
+	public ImageDisplayFrame ( )
+	{
+		try
+		{
+			jbInit (  );
+			
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace (  );
+		}
+	}
+
+	/**
+	 * Creates a new ImageDisplayFrame object.
+	 *
+	 * @param file location of the image file.
+	 * @param imageNo The image number in the database for the image
+	 */
+	public ImageDisplayFrame ( 
+	    String file,
+	    String imageNo,
+		String name
+		
+	 )
+	{
+		imageNumber = imageNo;
+        username = name;
+		File f = new File( file );
+
+		if ( f.exists (  ) && f.canRead (  ) )
+		{
+			this.setTitle ( f.getName (  ) );
+
+            try
+            {
+                //PlanarImage src = JAI.create ( "fileload", file, null );
+                PlanarImage src = null;
+                /*if(f.getName().endsWith(".tif") || f.getName().endsWith(".tiff"))
+                {
+                    System.out.println(System.currentTimeMillis() + "  1");
+                    FileInputStream fis = new FileInputStream(f);
+                    System.out.println(System.currentTimeMillis() + "  2");
+                    TIFFDecodeParam decode = new TIFFDecodeParam();
+                    System.out.println(System.currentTimeMillis() + "  3");
+                    decode.setDecodePaletteAsShorts(true);
+                    System.out.println(System.currentTimeMillis() + "  4");
+                    decode.setJPEGDecompressYCbCrToRGB(true);
+                    System.out.println(System.currentTimeMillis() + "  5");
+                    ImageDecoder dec = ImageCodec.createImageDecoder("TIFF", fis, decode);
+                    System.out.println(System.currentTimeMillis() + "  6");
+                    RenderedImage ri = dec.decodeAsRenderedImage();
+                    System.out.println(System.currentTimeMillis() + "  7");
+                    src = PlanarImage.wrapRenderedImage(ri);
+                    System.out.println(System.currentTimeMillis() + "  8");
+                }
+                else
+                {
+                    src = JAI.create ( "fileload", file, null );
+                }*/
+                src = JAI.create ( "fileload", file, null );
+                BufferedImage bi = src.getAsBufferedImage();
+                src = PlanarImage.wrapRenderedImage(bi);
+                panel     = new ImageDisplayPanel( src, imageNo, username );
+                label     = panel.getOdometer (  );
+            }
+            catch(Exception ex)
+            {}
+		}
+		else
+		{
+			System.out.println ( "File " + file + " not found." );
+
+			return;
+		}
+
+		try
+		{
+			jbInit (  );
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace (  );
+		}
+	}
+    static int loc = 0;
+	private void jbInit (  )
+		throws Exception
+	{
+		
+		this.setResizable ( true );
+		this.setClosable ( true );
+		this.setMaximizable ( true );
+		this.iconable = true;
+		this.setSize ( fwidth, fheight );
+		this.setLocation ( loc, 0 );
+		this.getContentPane (  ).setLayout ( gridBagLayout1 );
+		loc = loc + fwidth;
+		if (loc == fwidth*3)
+		{loc = 0;
+		}
+
+		if ( label == null )
+		{
+			label = new JLabel( "Image Display" );
+		}
+
+		this.getContentPane (  ).add ( 
+		    panel,
+		    new GridBagConstraints( 
+		        0,
+		        0,
+		        1,
+		        1,
+		        1.0,
+		        1.0,
+		        GridBagConstraints.CENTER,
+		        GridBagConstraints.BOTH,
+		        new Insets( 0, 0, 0, 0 ),
+		        0,
+		        0
+		     )
+		 );
+		this.getContentPane (  ).add ( 
+		    label,
+		    new GridBagConstraints( 
+		        0,
+		        1,
+		        1,
+		        1,
+		        0.0,
+		        0.0,
+		        GridBagConstraints.WEST,
+		        GridBagConstraints.NONE,
+		        new Insets( 0, 0, 0, 0 ),
+		        0,
+		        0
+		     )
+		 );
+
+		//this.addKeyListener(this);
+		//this.addFocusListener(this);
+		//System.out.println("focusable = " + isFocusable());
+		//System.out.println("added listener");
+	}
+
+	/**
+	 * Returns the ImageDisplayPanel object associated with this object.
+	 *
+	 * @return The ImageDisplayPanel object associated with this object.
+	 */
+	public ImageDisplayPanel getImageDisplayPanel (  )
+	{
+		return panel;
+	}
+
+	/**
+	 * Handles the event when a key is typed. Currently this function does nothing
+	 *
+	 * @param e a  KeyEvent object
+	 */
+	public void keyTyped ( KeyEvent e ) {}
+
+	/**
+	 * Handles the event when a key is pressed. Currently this function does nothing
+	 *
+	 * @param e a KeyEvent object
+	 */
+	public void keyPressed ( KeyEvent e ) {}
+
+	/**
+	 * Handles the event when a key is released. Currently this function does nothing
+	 *
+	 * @param e a KeyEvent object
+	 */
+	public void keyReleased ( KeyEvent e )
+	{
+		//System.out.println ( "A key was pressed" );
+		//int keyCode = e.getKeyCode (  );
+		//if ( keyCode == KeyEvent.VK_DELETE )
+		//{
+		//System.out.println ( "Delete key was pressed" );
+		//}
+	}
+
+	/**
+	 * Handles the event when focus is gained. Currently this function does nothing.
+	 *
+	 * @param e a FocusEvent object
+	 */
+	public void focusGained ( FocusEvent e )
+	{
+		//System.out.println ( "focus gained" );
+	}
+
+	/**
+	 * Handles the event when focus is lost. Currently this function does nothing.
+	 *
+	 * @param e a FocusEvent object
+	 */
+	public void focusLost ( FocusEvent e )
+	{
+		//System.out.println ( "focus lost" );
+	}
+
+	/**
+	 * Returns the image number in this frame
+	 *
+	 * @return the image number in this frame
+	 */
+	public String getImageNumber (  )
+	{
+		return imageNumber;
+	}
+
+	/**
+	 * Sets the image number in this frame.
+	 *
+	 * @param newImageNumber The new image number
+	 */
+	public void setImageNumber ( String newImageNumber )
+	{
+		imageNumber = newImageNumber;
+	}
+	public void getPrintNumber ()
+	{
+
+	}
+
+
+
+
+}
